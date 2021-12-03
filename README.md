@@ -103,5 +103,3 @@ http://localhost:3000/
 ## License
 
 MIT
-
-**Free Software, Hell Yeah!**
