@@ -4,7 +4,16 @@
 
 [![N|Solid](https://dimitr.im/static/d31b165dbfd8518bff91e72e987566cb/78597/vue-apollo-graphql.png)](https://dimitr.im/static/d31b165dbfd8518bff91e72e987566cb/78597/vue-apollo-graphql.png)
 
-This is a non-production ready full-stack simple JWT auth example.
+This is super simple full-stack simple JWT auth example. Focusing on principles and not look or UI appearance.
+
+## Screenshots
+
+Protected Dashboard
+[![N|Solid](https://i.imgur.com/t1tCeBs.jpg)](https://i.imgur.com/t1tCeBs.jpg)
+Register Page
+[![N|Solid](https://i.imgur.com/8WfL53F.jpg)](https://i.imgur.com/8WfL53F.jpg)
+Login Page
+[![N|Solid](https://i.imgur.com/rFWAtbs.jpg)](https://i.imgur.com/rFWAtbs.jpg)
 
 ## - FOR LEARNING PURPOSES ONLY -
 
@@ -88,6 +97,8 @@ http://localhost:3000/
 ## Learn and enjoy! 🍪
 
 ## Zoot#7045
+
+## Thank you [Cagatay Civici](https://typeorm.io/#/) PrimeVue is awesome.
 
 ## License
 

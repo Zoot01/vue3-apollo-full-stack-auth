@@ -206,7 +206,7 @@ export default defineComponent({
                 return
             }
 
-            void store.dispatch('root/loginUser', state)
+            registerUser()
             console.log('success')
             submitted.value = false
             resetLoginForm()

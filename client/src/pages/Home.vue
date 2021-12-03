@@ -71,7 +71,7 @@
                     <div class="text-500 w-full md:w-2 font-medium">
                         Salary Expectation
                     </div>
-                    <div class="text-900 w-full md:w-10">$150,000</div>
+                    <div class="text-900 w-full md:w-10">$15,000,000</div>
                 </li>
                 <li
                     class="flex align-items-center py-3 px-2 flex-wrap surface-50"
@@ -161,7 +161,8 @@
                                         </span>
                                     </div>
                                     <div class="text-700">
-                                        A Joke Of A Social Network.
+                                        A Social Network... But For
+                                        Professionals.
                                     </div>
                                 </div>
                             </div>

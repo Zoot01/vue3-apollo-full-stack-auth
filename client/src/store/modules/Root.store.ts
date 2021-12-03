@@ -68,8 +68,6 @@ const actions: ActionTree<RootStoreInterface, StateInterface> = {
     lookForAccessToken({ commit }) {
         // if there is a accessToken we need to authIt
         if (localStorage.getItem('accessToken')) {
-            //TODO
-            console.log('fucked')
             const {
                 mutate: isAuthMutaution,
                 onError,
@@ -86,7 +84,6 @@ const actions: ActionTree<RootStoreInterface, StateInterface> = {
             })
             onDone((res) => {
                 try {
-                    console.log(res)
                     const accessToken = JSON.stringify(
                         localStorage.getItem('accessToken')
                     )
@@ -107,6 +104,19 @@ const actions: ActionTree<RootStoreInterface, StateInterface> = {
         // no accessToken send to login
         else {
             //TODO
+            commit('SET_LOGIN_USER', null)
+            commit('SET_LOGIN_STATUS', false)
+            commit('SET_ACCESS_TOKEN', null)
+            router.push('/')
+        }
+    },
+    logoutUser({ commit }) {
+        if (localStorage.getItem('accessToken')) {
+            localStorage.removeItem('accessToken')
+            commit('SET_LOGIN_USER', null)
+            commit('SET_LOGIN_STATUS', false)
+            commit('SET_ACCESS_TOKEN', null)
+            router.push('/')
         }
     },
 }

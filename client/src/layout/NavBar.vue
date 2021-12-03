@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, computed } from 'vue'
 import { useStore } from '../store'
 
 export default defineComponent({
@@ -98,15 +98,19 @@ export default defineComponent({
             {
                 label: 'Logout',
                 icon: 'pi pi-fw pi-power-off',
+                command: () => {
+                    store.dispatch('root/logoutUser')
+                },
             },
         ])
 
-        const avatarInitals =
-            store.state.root.user?.firstName !== undefined &&
-            store.state.root.user.lastName !== undefined
+        const avatarInitals = computed(() => {
+            return store.state.root.user?.firstName !== undefined &&
+                store.state.root.user.lastName !== undefined
                 ? store.state.root.user?.firstName.charAt(0).toUpperCase() +
-                  store.state.root.user?.lastName.charAt(0).toUpperCase()
+                      store.state.root.user?.lastName.charAt(0).toUpperCase()
                 : 'FU'
+        })
 
         const toggle = (event: any) => {
             menu.value.toggle(event)

@@ -7,10 +7,16 @@ const router: Router = createRouter({
     routes,
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.name !== 'Login' && !store.state.root.isLoggedIn === true)
-        next({ name: 'Login' })
-    else next()
-})
+// export const authUser = router.beforeEach((to, from, next) => {
+//     if (to.name && !store.state.root.isLoggedIn === true) {
+//         next()
+//     } else next({ name: 'Login' })
+// })
+
+// router.beforeEach((to, from, next) => {
+//     if (to.name !== 'Login' && !store.state.root.isLoggedIn === true) {
+//         next({ name: 'Login' })
+//     } else next()
+// })
 
 export default router
