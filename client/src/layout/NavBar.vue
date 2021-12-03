@@ -3,7 +3,7 @@
         <template #end>
             <div class="flex">
                 <Avatar
-                    label="JO"
+                    :label="avatarInitals"
                     size="large"
                     class="ml-5"
                     @click="toggle"
@@ -24,11 +24,13 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
+import { useStore } from '../store'
 
 export default defineComponent({
     name: 'NavBar',
     components: {},
     setup() {
+        const store = useStore()
         const menu = ref()
         const navBarItems = ref([
             {
@@ -40,6 +42,7 @@ export default defineComponent({
                 label: 'Todos',
                 icon: 'pi pi-fw pi-list',
                 to: '/dashboard/todos',
+                disabled: true,
             },
             {
                 label: 'Profile',
@@ -98,6 +101,13 @@ export default defineComponent({
             },
         ])
 
+        const avatarInitals =
+            store.state.root.user?.firstName !== undefined &&
+            store.state.root.user.lastName !== undefined
+                ? store.state.root.user?.firstName.charAt(0).toUpperCase() +
+                  store.state.root.user?.lastName.charAt(0).toUpperCase()
+                : 'FU'
+
         const toggle = (event: any) => {
             menu.value.toggle(event)
         }
@@ -106,6 +116,8 @@ export default defineComponent({
             navBarItems,
             menu,
             toggle,
+            store,
+            avatarInitals,
         }
     },
 })

@@ -5,6 +5,7 @@ import Todos from '../pages/Todos.vue'
 import Login from '../pages/Login.vue'
 import Register from '../pages/Register.vue'
 import Profile from '../pages/Profile.vue'
+import store from '../store'
 
 const routes: RouteRecordRaw[] = [
     {

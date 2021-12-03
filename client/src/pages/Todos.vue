@@ -1,23 +1,23 @@
 <template>
     <div>
         <PageHeader title="Todos" :show-button="true" />
-        <div>
-            {{ result }}
+        <div v-if="result">
+            {{ result.hello }}
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, watch, ref } from 'vue'
 import PageHeader from '../components/PageHeader.vue'
-import { useQuery } from '@vue/apollo-composable'
-import { GET_ALL_CHARACTER_NAMES } from '../graphql/queries/getAllCharacter.query'
+import { useQuery, useResult } from '@vue/apollo-composable'
+import { helloQuery } from '../graphql/queries/hello.query'
 
 export default defineComponent({
     name: 'Todos',
     components: { PageHeader },
     setup() {
-        const { result, loading, error } = useQuery(GET_ALL_CHARACTER_NAMES)
+        const { result, onResult, error } = useQuery(helloQuery)
 
         return {
             result,

@@ -15,6 +15,7 @@
         "@vuelidate/validators": "^2.0.0-alpha.25",
         "graphql": "^16.0.1",
         "graphql-tag": "^2.12.6",
+        "jwt-decode": "^3.1.2",
         "primeflex": "^3.1.0",
         "primeicons": "^5.0.0",
         "primevue": "^3.9.1",
@@ -24,7 +25,6 @@
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^1.9.3",
-        "apollo": "^2.33.9",
         "eslint": "^8.3.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-vue": "^8.1.1",

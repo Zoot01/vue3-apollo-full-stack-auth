@@ -3,6 +3,7 @@ import { DefaultApolloClient } from '@vue/apollo-composable'
 import { apolloClient } from './apollo'
 import router from './router'
 import store from './store'
+import { storeKey } from './store'
 import App from './App.vue'
 import PrimeVue from 'primevue/config'
 import 'primevue/resources/themes/tailwind-light/theme.css'
@@ -109,7 +110,7 @@ const app = createApp(App)
 app.provide(DefaultApolloClient, apolloClient)
 
 app.use(router)
-app.use(store)
+app.use(store, storeKey)
 app.use(PrimeVue, {
     ripple: true,
 })

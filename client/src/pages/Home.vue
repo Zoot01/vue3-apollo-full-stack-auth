@@ -1,9 +1,13 @@
 <template>
+    <Toast />
     <div class="px-5 py-3 m-0">
         <div class="surface-card p-4 shadow-2 border-round">
             <div class="font-medium text-3xl text-900 mb-3">
                 Welcome,
-                <span class="text-primary font-normal">John Oneill</span>
+                <span class="text-primary font-normal">
+                    {{ store.state.root.user?.firstName }}
+                    {{ store.state.root.user?.lastName }}
+                </span>
             </div>
             <div class="text-500 mb-5">
                 🔒 This is your protected user dashboard.
@@ -13,11 +17,16 @@
                     class="flex align-items-center py-3 px-2 flex-wrap surface-50"
                 >
                     <div class="text-500 w-full md:w-2 font-medium">Name</div>
-                    <div class="text-900 w-full md:w-10">John Oneill</div>
+                    <div class="text-900 w-full md:w-10">
+                        {{ store.state.root.user?.firstName }}
+                        {{ store.state.root.user?.lastName }}
+                    </div>
                 </li>
                 <li class="flex align-items-center py-3 px-2 flex-wrap">
                     <div class="text-500 w-full md:w-2 font-medium">Email</div>
-                    <div class="text-900 w-full md:w-10">joneill@gmail.com</div>
+                    <div class="text-900 w-full md:w-10">
+                        {{ store.state.root.user?.email }}
+                    </div>
                 </li>
                 <li
                     class="flex align-items-center py-3 px-2 flex-wrap surface-50"
@@ -25,14 +34,24 @@
                     <div class="text-500 w-full md:w-2 font-medium">
                         Phone Number
                     </div>
-                    <div class="text-900 w-full md:w-10">(678) 987-9172</div>
+                    <div class="text-900 w-full md:w-10">
+                        {{ store.state.root.user?.phoneNumber }}
+                    </div>
                 </li>
                 <li class="flex align-items-center py-3 px-2 flex-wrap">
                     <div class="text-500 w-full md:w-2 font-medium">
                         Session Valid
                     </div>
-                    <div class="text-900 w-full md:w-10">
-                        <Tag value="True" severity="success"></Tag>
+                    <div class="text-900 md:w-10 flex flex-wrap">
+                        <Tag
+                            :value="
+                                store.state.root.accessToken !== null
+                                    ? true
+                                    : false
+                            "
+                            severity="success"
+                            class="uppercase"
+                        ></Tag>
                     </div>
                 </li>
                 <li
@@ -42,7 +61,10 @@
                         Account Count
                     </div>
                     <div class="text-900 w-full md:w-10">
-                        <Tag value="0" severity="info"></Tag>
+                        <Tag
+                            :value="store.state.root.user?.tokenVersion"
+                            severity="info"
+                        ></Tag>
                     </div>
                 </li>
                 <li class="flex align-items-center py-3 px-2 flex-wrap">
@@ -152,12 +174,36 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted } from 'vue'
+import { useStore } from '../store'
+import { useToast } from 'primevue/usetoast'
 
 export default defineComponent({
     name: 'Home',
     components: {},
-    setup() {},
+    setup() {
+        const store = useStore()
+        const toast = useToast()
+
+        onMounted(() => {
+            if (store.state.root.user !== null) {
+                toast.add({
+                    severity: 'success',
+                    summary: `Welcome ${
+                        store.state.root.user.firstName +
+                        ' ' +
+                        store.state.root.user.lastName
+                    }`,
+                    detail: 'You are now logged in and authenticated.',
+                    life: 5000,
+                })
+            }
+        })
+
+        return {
+            store,
+        }
+    },
 })
 </script>
 

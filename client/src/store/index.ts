@@ -4,7 +4,7 @@ import { createStore, Store as VuexStore, useStore as vuexUseStore } from 'vuex'
 //. state interfaces and module imports
 import { RootStoreInterface } from './modules/Root.interfaces'
 //. store states
-import Root from './modules/Root.store'
+import RootModule from './modules/Root.store'
 
 export interface StateInterface {
     root: RootStoreInterface
@@ -23,7 +23,7 @@ export const storeKey: InjectionKey<VuexStore<StateInterface>> =
 
 export default createStore<StateInterface>({
     modules: {
-        root: Root,
+        root: RootModule,
     },
 })
 

@@ -52,6 +52,7 @@
                                 toggleMask
                                 :feedback="false"
                                 name="password"
+                                autocomplete="on"
                                 :class="{
                                     'p-invalid':
                                         v$.password.$invalid && submitted,
@@ -97,16 +98,17 @@
 import { defineComponent, reactive, ref, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import { useStore } from '../store'
 
 export default defineComponent({
     name: 'Login',
     components: {},
     setup() {
+        const store = useStore()
         const submitted = ref(false)
         const state = reactive({
             email: '',
             password: '',
-            accept: null,
         })
         const submitLogin = (isFormValid: any) => {
             submitted.value = true
@@ -115,6 +117,7 @@ export default defineComponent({
             }
             console.log('success')
             submitted.value = false
+            store.dispatch('root/loginUser', state)
             resetLoginForm()
         }
 

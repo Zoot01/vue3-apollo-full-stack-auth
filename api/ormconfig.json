@@ -1,0 +1,10 @@
+{
+  "type": "mysql",
+  "database": "graphQL_Auth",
+  "username": "root",
+  "password": "",
+  "logging": true,
+  "synchronize": false,
+  "migrationsRun": false,
+  "entities": ["src/entity/*.ts"]
+}

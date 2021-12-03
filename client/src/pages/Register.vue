@@ -1,4 +1,5 @@
 <template>
+    <Toast />
     <div
         class="w-full h-full flex flex align-items-center justify-content-center"
     >
@@ -33,10 +34,11 @@
                     <small
                         v-if="v$.email.$invalid && submitted"
                         class="text-xs p-error"
-                        >{{
-                            v$.email.required.$message.replace('Value', 'Email')
-                        }}</small
                     >
+                        {{
+                            v$.email.required.$message.replace('Value', 'Email')
+                        }}
+                    </small>
                 </div>
 
                 <div class="col-12 md-4 mb-2">
@@ -58,13 +60,14 @@
                     <small
                         v-if="v$.firstName.$invalid && submitted"
                         class="text-xs p-error"
-                        >{{
+                    >
+                        {{
                             v$.firstName.required.$message.replace(
                                 'Value',
                                 'First name'
                             )
-                        }}</small
-                    >
+                        }}
+                    </small>
                 </div>
 
                 <div class="col-12 md-4 mb-2">
@@ -86,13 +89,14 @@
                     <small
                         v-if="v$.lastName.$invalid && submitted"
                         class="text-xs p-error"
-                        >{{
+                    >
+                        {{
                             v$.lastName.required.$message.replace(
                                 'Value',
                                 'Last name'
                             )
-                        }}</small
-                    >
+                        }}
+                    </small>
                 </div>
 
                 <div class="col-12 md-4 mb-2">
@@ -113,13 +117,14 @@
                     <small
                         v-if="v$.phoneNumber.$invalid && submitted"
                         class="text-xs p-error"
-                        >{{
+                    >
+                        {{
                             v$.phoneNumber.required.$message.replace(
                                 'Value',
                                 'Last name'
                             )
-                        }}</small
-                    >
+                        }}
+                    </small>
                 </div>
 
                 <div class="col-12 md-4 mb-2">
@@ -132,6 +137,7 @@
                                 id="password"
                                 v-model="v$.password.$model"
                                 toggleMask
+                                autocomplete="on"
                                 :feedback="false"
                                 name="password"
                                 :class="{
@@ -145,13 +151,14 @@
                     <small
                         v-if="v$.password.$invalid && submitted"
                         class="text-xs p-error"
-                        >{{
+                    >
+                        {{
                             v$.password.required.$message.replace(
                                 'Value',
                                 'Password'
                             )
-                        }}</small
-                    >
+                        }}
+                    </small>
                 </div>
 
                 <div class="text-base mb-2 text-center">
@@ -173,25 +180,33 @@
 import { defineComponent, reactive, ref, computed } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
+import { useMutation } from '@vue/apollo-composable'
+import { registerNewUserMutation } from '../graphql/mutations/registerNewUser.mutation'
+import { useToast } from 'primevue/usetoast'
+import { useStore } from '../store'
+import router from '../router'
 
 export default defineComponent({
     name: 'Login',
     components: {},
     setup() {
+        const store = useStore()
         const submitted = ref(false)
+        const toast = useToast()
         const state = reactive({
             email: '',
             password: '',
-            fistName: '',
+            firstName: '',
             lastName: '',
             phoneNumber: '',
-            accept: null,
         })
         const submitLogin = (isFormValid: any) => {
             submitted.value = true
             if (!isFormValid) {
                 return
             }
+
+            void store.dispatch('root/loginUser', state)
             console.log('success')
             submitted.value = false
             resetLoginForm()
@@ -200,7 +215,7 @@ export default defineComponent({
         const resetLoginForm = () => {
             state.email = ''
             state.password = ''
-            state.fistName = ''
+            state.firstName = ''
             state.lastName = ''
             state.phoneNumber = ''
         }
@@ -224,6 +239,44 @@ export default defineComponent({
         }))
 
         const v$ = useVuelidate(rules, state)
+
+        const {
+            mutate: registerUser,
+            onError,
+            onDone,
+        } = useMutation(registerNewUserMutation, () => ({
+            variables: {
+                user: {
+                    email: state.email,
+                    firstName: state.firstName,
+                    lastName: state.lastName,
+                    phoneNumber: state.phoneNumber,
+                    password: state.password,
+                },
+            },
+        }))
+
+        // if register fails
+        onError((err) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: `${err}`,
+                life: 3000,
+            })
+        })
+        // if login is success
+        onDone((res) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Account registered.',
+                detail: 'Success. Please login.',
+                life: 3000,
+            })
+            setTimeout(() => {
+                router.push('/')
+            }, 3000)
+        })
 
         return {
             state,
